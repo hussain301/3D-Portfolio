@@ -8,14 +8,42 @@ import { EarthCanvas } from './canvas'
 import { SectionWraper } from '../hoc'
 import { slideIn } from '../utils/motion'
 
+// template_s8p2kye
+// service_wcb3l1v
+// ZKVWI8aqCAIHzSg7a
 
 const Contact = () => {
   const forRef = useRef(null)
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [loading, setLoading] = useState(false)
 
-  const handleChange = (e) => { }
-  const handleSubmit = (e) => { }
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setForm({ ...form, [name]: value })
+
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setLoading(true)
+    emailjs.send('service_wcb3l1v', 'template_s8p2kye', {
+      from_name: form.name,
+      to_name: 'Hussain',
+      from_email: form.email,
+      to_email: 'hussainnariwal@gmail.com',
+      message: form.message,
+
+    }, 'ZKVWI8aqCAIHzSg7a')
+      .then((result) => {
+        console.log(result.text);
+        alert('Message sent successfully')
+        setLoading(false)
+        setForm({ name: '', email: '', message: '' })
+      }, (error) => {
+        console.log(error.text);
+        alert('Message not sent')
+        setLoading(false)
+      });
+  }
 
   return (
     <div className='xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden '>
